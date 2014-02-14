@@ -32,8 +32,5 @@ Research data used to inform policy and strategy initiatives could be readily ag
 - ## Inform the Scottish Government’s Datazone consultation
 Preliminary findings from the NN project will inform the joint response by CEC and NHS Lothian to the ongoing consultation on datazones by the Scottish Government.
 
-- ## Community councils
-The boundaries should help resolve boundary disputes between neighbouring CCs.
-
 - ## Synergies
 These activities can be viewed as self-reinforcing; the more uses the boundaries are put to, the more useful they will become. 
