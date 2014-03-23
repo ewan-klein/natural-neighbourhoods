@@ -7,11 +7,10 @@
   "licenses": [{
       "id": "ogl",
       "url": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/"
-}],
-  sources: [{
-"name" : "Iain Bell survey data"
-}],
-
+  }],
+  "sources": [{
+      "name" : "Iain Bell survey data"
+  }],
   "resources": [{
       "path": "survey_data_latlng.csv",
       "name": "survey_data_latlng",
@@ -36,11 +35,11 @@
             "name": "Postcode",
             "description": "UK Postcode", 
             "type": "number"
-          }
+          },
           {
             "name": "Latitude",
              "type": "number"
-          }
+          },
 	  {
             "name": "Longitude",
              "type": "number"
