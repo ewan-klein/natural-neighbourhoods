@@ -23,13 +23,13 @@
           },
           {
             "name": "Data Source",
-	    "description": "How data was collected"
-            "type": "string",
+	    "description": "How data was collected",
+            "type": "string"
            },
            {
             "name": "Allocated NN",
-	    "description": "Respondent's stated neighbourhood"
-            "type": "string",
+	    "description": "Respondent's stated neighbourhood",
+            "type": "string"
            },
            {
             "name": "Postcode",
