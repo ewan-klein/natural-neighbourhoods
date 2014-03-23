@@ -1,6 +1,6 @@
 {
   "datapackage_version": "1.0-beta.9",
-    "description": x
+  "description": "Geocoded data based on survey of Edinburgh residents",
   "version": "2014",
   "name": "edinburgh-natural-neighbourhoods",
   "title": "Natural Neighbourhoods in the City of Edinburgh",
