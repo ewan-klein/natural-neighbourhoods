@@ -1,0 +1,52 @@
+{
+  "datapackage_version": "1.0-beta.9",
+    "description": x
+  "version": "2014",
+  "name": "edinburgh-natural-neighbourhoods",
+  "title": "Natural Neighbourhoods in the City of Edinburgh",
+  "licenses": [{
+      "id": "ogl",
+      "url": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/"
+}],
+  sources: [{
+"name" : "Iain Bell survey data"
+}],
+
+  "resources": [{
+      "path": "survey_data_latlng.csv",
+      "name": "survey_data_latlng",
+      "mediatype": "text/csv",
+      "schema": {
+        "fields": [
+          {
+            "name": "Record ID",
+            "type": "integer"
+          },
+          {
+            "name": "Data Source",
+	    "description": "How data was collected"
+            "type": "string",
+           },
+           {
+            "name": "Allocated NN",
+	    "description": "Respondent's stated neighbourhood"
+            "type": "string",
+           },
+           {
+            "name": "Postcode",
+            "description": "UK Postcode", 
+            "type": "number"
+          }
+          {
+            "name": "Latitude",
+             "type": "number"
+          }
+	  {
+            "name": "Longitude",
+             "type": "number"
+          }
+        ]
+      }
+    }
+  ]
+}
