@@ -15,7 +15,7 @@ def main():
     
     #(record_id, data_source,allocated_NN,postcode, Xcord, Ycord , last_Modified, geography)
     reader.next() #skip header
-    new_rows = []
+    #new_rows = []
     for row in reader:       
         data = list(row)[0:4]
         cur = int(data[0])                
@@ -33,12 +33,10 @@ def main():
             FIRST = FIRST + 1
         except TypeError:
             print "Failed to geo-code"
-        #new_rows.append(new_row)
         
         
         with open('nn.csv', mode='a') as csv_out:
             writer = csv.writer(csv_out, dialect='excel')
-            #for row in new_rows:
             writer.writerow(data)
          
 
