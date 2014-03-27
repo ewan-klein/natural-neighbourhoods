@@ -5,7 +5,9 @@ def normalise(reader):
     new_rows = []
     for row in reader:
         nn = row[2]
-        
+        if nn == "NN not supplied":
+            continue
+        else
         
 
 def main():
