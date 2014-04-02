@@ -3,6 +3,7 @@ Convert the CSV-formatted geocoded survey data file into geoJSON.
 """
 from __future__ import print_function
 
+import colorsys
 import csv
 import geojson as geo
 from collections import Counter
@@ -34,6 +35,9 @@ def normalise_nns(reader):
 
         
 def upper_postcode(line):
+    """
+    Ensure postcodes are all upper case.
+    """
     postcode = line[3]
     line[3] = postcode.upper()
     return line
@@ -42,23 +46,24 @@ def upper_postcode(line):
 def filter_names(line, verbose=True):
     nn = line[2]
     parts = nn.split()
-    new = nn
+    old = nn
     if len(parts) > 1:
-        new = nn
-        if parts[0] in ['Granton', 'Baberton']:
-            new = parts[0]
+        if parts[0] in ['Granton', 'Baberton', 'Colinton']:
+            nn = parts[0]
         if parts[0] in ['North', 'South'] and parts[1] != 'Queensferry':
-            new = parts[1]
+            nn = parts[1]
+        if parts[1] == 'Pilton':
+            nn = parts[1]
         if parts[1] in ['Colonies', 'Park', 'Village', 'Hill', 'Avenue', 'Station', 'Terrace'] and parts[0] not in ['Dean', 'Church']:
-            new = parts[0]
-        line[2] = new
-    if new in ['Grange', 'Gyle']: 
-        new = 'The ' + new
-    if verbose and nn != new:
-        print("Replacing %s with %s" % (nn, new))
+            nn = parts[0]        
+    if nn in ['Grange', 'Gyle']: 
+        nn = 'The ' + nn
+    line[2] = nn
+    if verbose and nn != old:
+        print("Replacing %s with %s" % (old, nn))
     return line
 
-def filter_rare(line, counter, n=10, verbose=True):
+def filter_rare(line, counter, n=10, verbose=False):
     nn = line[2]
     if counter[nn] < n:
         if verbose:
@@ -85,42 +90,46 @@ def lists2json(data, verbose=False):
             print(geo.dumps(feature))
     return features
 
-def extract_nns(data):
-    """
-    Pull out the natural neighbourhood names
-    """
-    nns = []
-    for l in data:
-        nn = l[2]
-        nns.append(nn)
-    return nns
-
-
+def colorize(nns):
+    N = len(nns)
+    
+    HSV_tuples = [(x*1.0/N, 0.5, 0.5) for x in range(N)]
+    RGB_tuples = [colorsys.hsv_to_rgb(*hsv) for hsv in HSV_tuples]
+    HEX_tuples = ['%02x%02x%02x' % (int(r*256), int(g*256), int(b*256)) for (r, g, b) in RGB_tuples]
+    return HEX_tuples
+    
 
 def main():
     
     reader = csv.reader(open(CSV_IN, "rU"))
     reader.next()
+    header = ['Record ID', 'Data Source', 'Allocated NN', 'Postcode', 'Latitude', 'Longitude']
     
     data = normalise_nns(reader)
-    nns = extract_nns(data)
+    nns = [line[2] for line in data]
+    print(len(nns))
     counter = Counter(nns)
     
     with open(NNS, "w") as outfile:
         writer = csv.writer(outfile)
         writer.writerows(counter.most_common())    
     
-    fixed_postcodes = [upper_postcode(l) for l in data]
-    filtered = [filter_names(l) for l in fixed_postcodes]
-    thresholded = [l for l in filtered if filter_rare(l, counter)]
+    data = [upper_postcode(l) for l in data]
+    data = [filter_names(l) for l in data]
+    data = [l for l in data if filter_rare(l, counter)]
+    
+    filtered_nns= sorted(set([line[2] for line in data]))
+    print(len(filtered_nns))
+    colors = colorize(filtered_nns)
     
     with open(CSV_FILT, "w") as outfile:
-        lines = len(thresholded)
+        lines = len(data)
         print('Dumping CSV with %s lines to %s' % (lines, CSV_FILT))
         writer = csv.writer(outfile)
-        writer.writerows(thresholded)        
+        writer.writerow(header)
+        writer.writerows(data)        
    
-    features = lists2json(thresholded)
+    features = lists2json(data)
     
     with open(JSON_OUT, "w") as outfile:
         print('Dumping GeoJSON to %s' % JSON_OUT)
