@@ -9,17 +9,19 @@ from collections import Counter
 
 
 CSV_IN = "../survey_data_latlng.csv"
+CSV_FILT = "../survey_data_latlng_filtered.csv"
 JSON_OUT = "../survey_data.json"
 NNS = "../nn_freq.csv"
 
-def unslash(reader):
+
+def normalise_nns(reader):
     """
-    Normalise neighbourhood names by removing slashes.
+    Normalise neighbourhood names by removing slashes and removing 'Not supplied' values.
     """
     new_rows = []
     for row in reader:
         nn = row[2]
-        if nn == "NN not supplied":
+        if nn == "NN not supplied" or 'Edinburgh' in nn:
             continue
         nns = nn.split('/')
         if len(nns) > 1:
@@ -29,6 +31,33 @@ def unslash(reader):
         else:
             new_rows.append(row)
     return new_rows
+
+        
+def upper_postcode(line):
+    postcode = line[3]
+    line[3] = postcode.upper()
+    return line
+
+
+def filter_nns(line, verbose=True):
+    nn = line[2]
+    parts = nn.split()
+    new = nn
+    if len(parts) > 1:
+        new = nn
+        if parts[0] in ['Granton', 'Baberton']:
+            new = parts[0]
+        if parts[0] in ['North', 'South'] and parts[1] != 'Queensferry':
+            new = parts[1]
+        if parts[1] in ['Colonies', 'Park', 'Village', 'Hill', 'Avenue', 'Station', 'Terrace'] and parts[0] not in ['Dean', 'Church']:
+            new = parts[0]
+        line[2] = new
+    if new in ['Grange', 'Gyle']: 
+        new = 'The ' + new
+    if verbose and nn != new:
+        print("Replacing %s with %s" % (nn, new))
+    return line
+
 
 def lists2json(data, verbose=False):
     features = []
@@ -71,18 +100,25 @@ def main():
     reader = csv.reader(open(CSV_IN, "rU"))
     reader.next()
     
-    data = unslash(reader)
-    features = lists2json(data)
+    data = normalise_nns(reader)
+    nns = extract_nns(data)
+    nns_info(nns)   
+    
+    fixed_postcodes = [upper_postcode(l) for l in data]
+    filtered = [filter_nns(l) for l in fixed_postcodes]
+    
+    with open(CSV_FILT, "w") as outfile:
+        print('Dumping CSV to %s' % CSV_FILT)
+        writer = csv.writer(outfile)
+        writer.writerows(filtered)        
+   
+    features = lists2json(filtered)
     
     with open(JSON_OUT, "w") as outfile:
-        geo.dump(geo.FeatureCollection(features), outfile)
+        print('Dumping GeoJSON to %s' % JSON_OUT)
+        geo.dump(geo.FeatureCollection(features), outfile)    
     
-    nns = extract_nns(data)
-    nns_info(nns)
     
-    #print(len(nns))
-    #for nn in nns:
-        #print(nn)
 
 if __name__ == "__main__":
     main() 
