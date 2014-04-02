@@ -39,7 +39,7 @@ def upper_postcode(line):
     return line
 
 
-def filter_nns(line, verbose=True):
+def filter_names(line, verbose=True):
     nn = line[2]
     parts = nn.split()
     new = nn
@@ -58,6 +58,13 @@ def filter_nns(line, verbose=True):
         print("Replacing %s with %s" % (nn, new))
     return line
 
+def filter_rare(line, counter, n=10, verbose=True):
+    nn = line[2]
+    if counter[nn] < n:
+        if verbose:
+            print('Skipping %s with count %s' % (nn, counter[nn]))
+        return False
+    return True
 
 def lists2json(data, verbose=False):
     features = []
@@ -88,12 +95,7 @@ def extract_nns(data):
         nns.append(nn)
     return nns
 
-def nns_info(nns, outfile=True):
-    c = Counter(nns)
-    freqdist = c.most_common()
-    with open(NNS, "w") as outfile:
-        writer = csv.writer(outfile)
-        writer.writerows(freqdist)
+
 
 def main():
     
@@ -102,17 +104,23 @@ def main():
     
     data = normalise_nns(reader)
     nns = extract_nns(data)
-    nns_info(nns)   
+    counter = Counter(nns)
+    
+    with open(NNS, "w") as outfile:
+        writer = csv.writer(outfile)
+        writer.writerows(counter.most_common())    
     
     fixed_postcodes = [upper_postcode(l) for l in data]
-    filtered = [filter_nns(l) for l in fixed_postcodes]
+    filtered = [filter_names(l) for l in fixed_postcodes]
+    thresholded = [l for l in filtered if filter_rare(l, counter)]
     
     with open(CSV_FILT, "w") as outfile:
-        print('Dumping CSV to %s' % CSV_FILT)
+        lines = len(thresholded)
+        print('Dumping CSV with %s lines to %s' % (lines, CSV_FILT))
         writer = csv.writer(outfile)
-        writer.writerows(filtered)        
+        writer.writerows(thresholded)        
    
-    features = lists2json(filtered)
+    features = lists2json(thresholded)
     
     with open(JSON_OUT, "w") as outfile:
         print('Dumping GeoJSON to %s' % JSON_OUT)
