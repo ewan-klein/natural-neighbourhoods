@@ -1,7 +1,21 @@
+"""
+Convert the CSV-formatted geocoded survey data file into geoJSON.
+"""
+from __future__ import print_function
+
 import csv
 import geojson as geo
+from collections import Counter
 
-def normalise(reader):
+
+CSV_IN = "../survey_data_latlng.csv"
+JSON_OUT = "../survey_data.json"
+NNS = "../nn_freq.csv"
+
+def unslash(reader):
+    """
+    Normalise neighbourhood names by removing slashes.
+    """
     new_rows = []
     for row in reader:
         nn = row[2]
@@ -22,7 +36,7 @@ def lists2json(data, verbose=False):
         try:
             (nn_id, src, nn, postcode, lat, lng) = tuple(l)
         except ValueError:
-            print l
+            print(l)
         lat = float(lat)
         lng = float(lng)
         feature = geo.Feature(
@@ -32,31 +46,43 @@ def lists2json(data, verbose=False):
         )
         features.append(feature)
         if verbose:
-            print geo.dumps(feature)
+            print(geo.dumps(feature))
     return features
 
 def extract_nns(data):
+    """
+    Pull out the natural neighbourhood names
+    """
     nns = []
     for l in data:
         nn = l[2]
         nns.append(nn)
-    return sorted(set(nns))
+    return nns
+
+def nns_info(nns, outfile=True):
+    c = Counter(nns)
+    freqdist = c.most_common()
+    with open(NNS, "w") as outfile:
+        writer = csv.writer(outfile)
+        writer.writerows(freqdist)
 
 def main():
-    csv_in = "../survey_data_latlng.csv"       
-    reader = csv.reader(open(csv_in, "rU"))
+    
+    reader = csv.reader(open(CSV_IN, "rU"))
     reader.next()
     
-    data = normalise(reader)
+    data = unslash(reader)
     features = lists2json(data)
     
-    with open("../survey_data.json", "w") as json_out:
-        geo.dump(geo.FeatureCollection(features), json_out)
+    with open(JSON_OUT, "w") as outfile:
+        geo.dump(geo.FeatureCollection(features), outfile)
     
     nns = extract_nns(data)
-    print len(nns)
-    for nn in nns:
-        print nn
+    nns_info(nns)
+    
+    #print(len(nns))
+    #for nn in nns:
+        #print(nn)
 
 if __name__ == "__main__":
     main() 
