@@ -139,7 +139,7 @@ def main():
     
     data = normalise_nns(reader)
     nns = [line[2] for line in data]
-    print(len(nns))
+    print("Number of neighbourhood terms: %s" % len(set(nns)))
     counter = Counter(nns)
     
     with open(NNS, "w") as outfile:
@@ -151,7 +151,7 @@ def main():
     data = [l for l in data if filter_rare(l, counter)]
     
     filtered_nns= sorted(set([line[2] for line in data]))
-    print(len(filtered_nns))
+    print("Number of neighbourhood terms after filtering: %s" % len(filtered_nns))
     css = category_css(filtered_nns)
     
     with open(CSS, "w") as outfile:
