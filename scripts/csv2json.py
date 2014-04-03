@@ -7,10 +7,12 @@ import colorsys
 import csv
 import geojson as geo
 from collections import Counter
+from string import Template
 
 
 CSV_IN = "../survey_data_latlng.csv"
 CSV_FILT = "../survey_data_latlng_filtered.csv"
+CSS = '../carto.css'
 JSON_OUT = "../survey_data.json"
 NNS = "../nn_freq.csv"
 
@@ -93,10 +95,40 @@ def lists2json(data, verbose=False):
 def colorize(nns):
     N = len(nns)
     
-    HSV_tuples = [(x*1.0/N, 0.5, 0.5) for x in range(N)]
-    RGB_tuples = [colorsys.hsv_to_rgb(*hsv) for hsv in HSV_tuples]
+    HLS_tuples = [(x*1.0/N, 0.5, 0.6) for x in range(N)]
+    RGB_tuples = [colorsys.hls_to_rgb(*hls) for hls in HLS_tuples]
     HEX_tuples = ['%02x%02x%02x' % (int(r*256), int(g*256), int(b*256)) for (r, g, b) in RGB_tuples]
     return HEX_tuples
+
+
+def category_css(nns):
+    output = []
+    t_header = """
+/** category visualization */
+
+#survey_data_latlng_filtered {
+   marker-opacity: 0.9;
+   marker-line-color: #FFF;
+   marker-line-width: 1.5;
+   marker-line-opacity: 1;
+   marker-placement: point;
+   marker-type: ellipse;
+   marker-width: 10;
+   marker-allow-overlap: true;
+}
+    """
+    
+    t_body = """
+#survey_data_latlng_filtered[allocated_nn="$nn"] {
+marker-fill: #$colour;
+}
+    """
+    output.append(t_header)
+    nn_colours = zip(nns, colorize(nns))
+    s = Template(t_body)
+    for (nn, colour) in nn_colours:
+        output.append(s.substitute(nn=nn, colour=colour))
+    return ''.join(output)
     
 
 def main():
@@ -120,8 +152,13 @@ def main():
     
     filtered_nns= sorted(set([line[2] for line in data]))
     print(len(filtered_nns))
-    colors = colorize(filtered_nns)
+    css = category_css(filtered_nns)
     
+    with open(CSS, "w") as outfile:
+        print('Writing CCS to %s' % CSS)
+        outfile.write(css)
+        
+        
     with open(CSV_FILT, "w") as outfile:
         lines = len(data)
         print('Dumping CSV with %s lines to %s' % (lines, CSV_FILT))
