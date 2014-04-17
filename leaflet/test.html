@@ -2,21 +2,32 @@
 <html>
 <head>
  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
- <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
- #map { height: 180px; }
-<title>Foo</title>
+ <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js">
+</script>
+<script type="text/javascript">
+ window.onload = function () {
+var map = L.map('map').setView([55.9403,-3.1689], 13);
+
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+};
+</script>
+<style>
+#map {
+    width:1500px;
+    height:1000px;
+}
+</style>
+<title>Edinburgh Natural Neighbourhoods</title>
 </head>
 
 <body>
-<h1>Hello World</h1>
 
  <div id="map"></div>
 
-
- 
-
-
 <hr>
 <address></address>
-<!-- hhmts start -->Last modified: Tue Apr 15 22:56:33 BST 2014 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Thu Apr 17 12:30:45 BST 2014 <!-- hhmts end -->
 </body> </html>
