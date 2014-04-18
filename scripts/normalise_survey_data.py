@@ -11,7 +11,7 @@ from string import Template
 
 
 CSV_IN = "../survey_data_latlng.csv"
-CSV_FILT = "../survey_data_latlng_filtered.csv"
+CSV_FILT = "../nn_data_normalised.csv"
 CSS = '../carto.css'
 JSON_OUT = "../survey_data.json"
 NNS = "../nn_freq.csv"
