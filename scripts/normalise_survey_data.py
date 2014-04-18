@@ -1,7 +1,8 @@
 """
-Convert the CSV-formatted geocoded survey data file into geoJSON.
+Normalise the natural neighbourhood survey data.
+
 """
-from __future__ import print_function
+#from __future__ import print_function
 
 import colorsys
 import csv
@@ -150,7 +151,7 @@ marker-fill: #$colour;
 def main(carto_css=False, geojson=False):
     
     reader = csv.reader(open(CSV_IN, "rU"))
-    reader.next()
+    next(reader)
     header = ['Record ID', 'Data Source', 'Allocated NN', 'Postcode', 'Latitude', 'Longitude']
     
     data = normalise_nns(reader)
