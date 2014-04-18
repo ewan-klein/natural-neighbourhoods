@@ -45,7 +45,10 @@ def upper_postcode(line):
     return line
 
 
-def filter_names(line, verbose=True):
+def normalise_names(line, verbose=True):
+    """
+    Normalise neighbourhood names.
+    """
     nn = line[2]
     parts = nn.split()
     old = nn
@@ -66,6 +69,9 @@ def filter_names(line, verbose=True):
     return line
 
 def filter_rare(line, counter, n=10, verbose=False):
+    """
+    Remove records for neighbourhoods with less than n hits.
+    """
     nn = line[2]
     if counter[nn] < n:
         if verbose:
@@ -74,6 +80,9 @@ def filter_rare(line, counter, n=10, verbose=False):
     return True
 
 def lists2json(data, verbose=False):
+    """
+    Convert the table to GeoJson format.
+    """
     features = []
     for l in data:
         try:
@@ -93,6 +102,10 @@ def lists2json(data, verbose=False):
     return features
 
 def colorize(nns):
+    """
+    Simple minded approach to creating as many colours as there are
+    categories.
+    """
     N = len(nns)
     
     HLS_tuples = [(x*1.0/N, 0.5, 0.6) for x in range(N)]
@@ -101,7 +114,10 @@ def colorize(nns):
     return HEX_tuples
 
 
-def category_css(nns):
+def carto_category_css(nns):
+    """
+    Create Carto-style CSS filters
+    """
     output = []
     t_header = """
 /** category visualization */
@@ -131,7 +147,7 @@ marker-fill: #$colour;
     return ''.join(output)
     
 
-def main():
+def main(carto_css=False, geojson=False):
     
     reader = csv.reader(open(CSV_IN, "rU"))
     reader.next()
@@ -147,30 +163,32 @@ def main():
         writer.writerows(counter.most_common())    
     
     data = [upper_postcode(l) for l in data]
-    data = [filter_names(l) for l in data]
+    data = [normalise_names(l) for l in data]
     data = [l for l in data if filter_rare(l, counter)]
     
     filtered_nns= sorted(set([line[2] for line in data]))
     print("Number of neighbourhood terms after filtering: %s" % len(filtered_nns))
-    css = category_css(filtered_nns)
     
-    with open(CSS, "w") as outfile:
-        print('Writing CCS to %s' % CSS)
-        outfile.write(css)
-        
-        
     with open(CSV_FILT, "w") as outfile:
-        lines = len(data)
-        print('Dumping CSV with %s lines to %s' % (lines, CSV_FILT))
-        writer = csv.writer(outfile)
-        writer.writerow(header)
-        writer.writerows(data)        
-   
-    features = lists2json(data)
+            lines = len(data)
+            print('Dumping CSV with %s lines to %s' % (lines, CSV_FILT))
+            writer = csv.writer(outfile)
+            writer.writerow(header)
+            writer.writerows(data)           
     
-    with open(JSON_OUT, "w") as outfile:
-        print('Dumping GeoJSON to %s' % JSON_OUT)
-        geo.dump(geo.FeatureCollection(features), outfile)    
+    if carto_css:
+        css = carto_category_css(filtered_nns)
+        
+        with open(CSS, "w") as outfile:
+            print('Writing CCS to %s' % CSS)
+            outfile.write(css)     
+   
+    if geojson:
+        features = lists2json(data)
+        
+        with open(JSON_OUT, "w") as outfile:
+            print('Dumping GeoJSON to %s' % JSON_OUT)
+            geo.dump(geo.FeatureCollection(features), outfile)    
     
     
 
