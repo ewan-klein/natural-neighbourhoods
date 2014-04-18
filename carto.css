@@ -1,0 +1,302 @@
+
+/** category visualization */
+
+#survey_data_latlng_filtered {
+   marker-opacity: 0.9;
+   marker-line-color: #FFF;
+   marker-line-width: 1.5;
+   marker-line-opacity: 1;
+   marker-placement: point;
+   marker-type: ellipse;
+   marker-width: 10;
+   marker-allow-overlap: true;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Abbeyhill"] {
+marker-fill: #cc3333;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Baberton"] {
+marker-fill: #cc3f33;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Balerno"] {
+marker-fill: #cc4c33;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Barnton"] {
+marker-fill: #cc5933;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Bellevue"] {
+marker-fill: #cc6633;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Blackford"] {
+marker-fill: #cc7333;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Blackhall"] {
+marker-fill: #cc8033;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Bonnington"] {
+marker-fill: #cc8c33;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Broughton"] {
+marker-fill: #cc9933;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Bruntsfield"] {
+marker-fill: #cca633;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Canonmills"] {
+marker-fill: #ccb333;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Carrick Knowe"] {
+marker-fill: #ccc033;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="City Centre"] {
+marker-fill: #cccc33;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Clermiston"] {
+marker-fill: #c0cc33;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Colinton"] {
+marker-fill: #b3cc33;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Comely Bank"] {
+marker-fill: #a6cc33;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Corstorphine"] {
+marker-fill: #99cc33;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Craigentinny"] {
+marker-fill: #8ccc33;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Craigleith"] {
+marker-fill: #80cc33;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Craiglockhart"] {
+marker-fill: #73cc33;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Cramond"] {
+marker-fill: #66cc33;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Currie"] {
+marker-fill: #59cc33;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Dalry"] {
+marker-fill: #4ccc33;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Davidson's Mains"] {
+marker-fill: #40cc33;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Drylaw"] {
+marker-fill: #33cc33;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Duddingston"] {
+marker-fill: #33cc40;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="East Craigs"] {
+marker-fill: #33cc4c;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Easter Road"] {
+marker-fill: #33cc59;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Fairmilehead"] {
+marker-fill: #33cc66;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Fountainbridge"] {
+marker-fill: #33cc73;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Gilmerton"] {
+marker-fill: #33cc80;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Gorgie"] {
+marker-fill: #33cc8c;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Gracemount"] {
+marker-fill: #33cc99;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Granton"] {
+marker-fill: #33cca6;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Haymarket"] {
+marker-fill: #33ccb3;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Hillside"] {
+marker-fill: #33ccc0;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Inverleith"] {
+marker-fill: #33cccc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Kirkliston"] {
+marker-fill: #33c0cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Leith"] {
+marker-fill: #33b3cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Leith Links"] {
+marker-fill: #33a6cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Liberton"] {
+marker-fill: #3399cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Lochend"] {
+marker-fill: #338ccc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Marchmont"] {
+marker-fill: #337fcc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Meadowbank"] {
+marker-fill: #3373cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Merchiston"] {
+marker-fill: #3366cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Morningside"] {
+marker-fill: #3359cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="New Town"] {
+marker-fill: #334ccc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Newhaven"] {
+marker-fill: #333fcc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Newington"] {
+marker-fill: #3333cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Old Town"] {
+marker-fill: #3f33cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Oxgangs"] {
+marker-fill: #4c33cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Pilrig"] {
+marker-fill: #5933cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Pilton"] {
+marker-fill: #6633cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Polwarth"] {
+marker-fill: #7333cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Portobello"] {
+marker-fill: #7f33cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Prestonfield"] {
+marker-fill: #8c33cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Ratho"] {
+marker-fill: #9933cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Restalrig"] {
+marker-fill: #a633cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Roseburn"] {
+marker-fill: #b333cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Sciennes"] {
+marker-fill: #bf33cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Shandon"] {
+marker-fill: #cc33cc;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Sighthill"] {
+marker-fill: #cc33c0;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Silverknowes"] {
+marker-fill: #cc33b3;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="South Queensferry"] {
+marker-fill: #cc33a6;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Southside"] {
+marker-fill: #cc3399;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Stockbridge"] {
+marker-fill: #cc338c;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="The Grange"] {
+marker-fill: #cc3380;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="The Inch"] {
+marker-fill: #cc3373;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="The Shore"] {
+marker-fill: #cc3366;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Tollcross"] {
+marker-fill: #cc3359;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Trinity"] {
+marker-fill: #cc334c;
+}
+    
+#survey_data_latlng_filtered[allocated_nn="Willowbrae"] {
+marker-fill: #cc333f;
+}
+    
