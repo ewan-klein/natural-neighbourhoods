@@ -4,7 +4,8 @@
     <title>Leaflet.heat demo</title>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
-    <script src="http://leaflet.github.io/Leaflet.markercluster/example/realworld.10000.js"></script>
+    <script src="../heatmap_data/abbeyhill.js"></script>
+    <script src="../heatmap_data/leith.js"></script>
     <script src="leaflet-heat.js"></script>
     <script>
      window.onload = function () {
@@ -15,26 +16,28 @@
 	 id: 'examples.map-20v6611k'
        }).addTo(map);
 
-       var heat = L.heatLayer(addressPoints).addTo(map),
+    
+
+      var heat = L.heatLayer(leith, {radius: 20, blur: 15, gradient:
+				     {0.1: 'rgb(31,100,160)',
+				      0.65: "rgb(31,120,180)", 
+				      0.75: "rgb(31,140,200)", 
+				      1: "rgb(31,120,220)"}
+				    }).addTo(map),
        draw = true;
 
-       map.on({
-	 movestart: function () { draw = false; },
-	 moveend:   function () { draw = true; },
-	 mousemove: function (e) {
-           if (draw) {
-             heat.addLatLng(e.latlng);
-           }
-	 }
-       })
-     }
+
+}
+
+
+
+     
     </script>
     <style>
      #map {
        width: 1000px;
        height: 800px; }
     </style>
-
   </head>
 
   <body>
