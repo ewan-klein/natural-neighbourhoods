@@ -2,10 +2,11 @@
 
 """
 
-from collections import Counter, defaultdict, namedtuple
+from collections import Counter, defaultdict
 import csv
 import json
 import os
+import shutil
 
 
 CSV_IN = "../nn_data_normalised.csv"
@@ -36,27 +37,40 @@ class Neighourhoods(object):
         Build a dictionary that maps neighbourhood names into a list of
         coordinates, one for each survey response.
         """
-        Coordinates = namedtuple('Coordinates', 'postcode, lat, lng')
         d = defaultdict(list)
         for line in self.data:
-            coords = Coordinates(line[3], line[4], line[5])
+            geo = tuple(line[4:6])
             nn_name = line[2]
-            d[nn_name].append(coords)        
+            d[nn_name].append(geo)        
         self.nn_dict = d
         
+    def uglify(self, name):
+        name = name.lower()
+        name = name.replace(" ", "_")
+        name = name.replace("'", "")
+        return name
+        
+    
     def dump_address_points(self, subdir, verbose=True):
         """
         Write a file of coordinates for each neighbourhood.
         """
+        if os.path.exists(subdir):            
+            shutil.rmtree(subdir)
+        os.makedirs(subdir)
+        count = 0
+        
         for nn in self.nn_dict:
             vals = self.nn_dict[nn]
-            vals = [[float(coord.lat), float(coord.lng)] for coord in vals]
+            vals = [[float(lat), float(lng)] for (lat, lng) in vals]
+            nn = self.uglify(nn)
             fn = os.path.join(subdir, nn + '.js')
             header = "var addressPoints = \n"
             contents = header + json.dumps(vals)
             with open(fn, "w") as outfile:
                 outfile.write(contents)
-                print("Writing to %s" % fn)
+                print("[%s] Writing to %s" % (count,fn))
+            count = count + 1
     
 def main():   
     nns = Neighourhoods(CSV_IN)
