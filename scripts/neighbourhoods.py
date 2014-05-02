@@ -65,7 +65,7 @@ class Neighourhoods(object):
             vals = [[float(lat), float(lng)] for (lat, lng) in vals]
             nn = self.uglify(nn)
             fn = os.path.join(subdir, nn + '.js')
-            header = "var addressPoints = \n"
+            header = ("var %s = \n" % nn)
             contents = header + json.dumps(vals)
             with open(fn, "w") as outfile:
                 outfile.write(contents)
