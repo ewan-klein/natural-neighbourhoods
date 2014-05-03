@@ -18,14 +18,31 @@
 
     
 
-      var heat = L.heatLayer(leith, {radius: 20, blur: 15, gradient:
+var h1 = L.heatLayer(abbeyhill, {radius: 20, blur: 15, gradient:
 				     {0.1: 'rgb(31,100,160)',
 				      0.65: "rgb(31,120,180)", 
 				      0.75: "rgb(31,140,200)", 
 				      1: "rgb(31,120,220)"}
-				    }).addTo(map),
-       draw = true;
+				    }).addTo(map);
 
+var h2 = L.heatLayer(leith, {radius: 20, blur: 15, gradient:
+				     {0.1: 'rgb(31,100,160)',
+				      0.65: "rgb(31,120,180)", 
+				      0.75: "rgb(31,140,200)", 
+				      1: "rgb(31,120,220)"}
+				    }).addTo(map);
+
+var circle = L.circle([55.95687242, -3.167431367], 100, {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5
+}).addTo(map);
+
+var circle = L.circle([55.957, -3.19], 500, {
+    color: 'black',
+    fillColor: 'blue',
+    fillOpacity: 0.5
+}).addTo(map);
 
 }
 

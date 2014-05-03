@@ -6,7 +6,7 @@
     <script type="text/javascript" src="heatmap-leaflet.js"></script>
     <script src="nn.js" type="text/javascript"></script>
     <script type="text/javascript">
-    function () {
+    $(function () {
        var baseLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 	 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 	 maxZoom: 15
@@ -43,7 +43,7 @@
        // make accessible for debugging
        layer = heatmapLayer;
 
-     };
+     });
     </script>
     <script type="text/javascript" charset="utf-8">
       var testData={

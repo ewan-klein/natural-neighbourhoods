@@ -10,11 +10,21 @@
 #
 
 from collections import Counter, defaultdict
+import colorsys
 import csv
+from itertools import zip_longest
 import json
 import os
 import shutil
 from string import Template
+
+import numpy as np
+
+def grouper(n, iterable, fillvalue=None):
+    "grouper(3, 'ABCDEFG', 'x') --> ABC DEF Gxx"
+    args = [iter(iterable)] * n
+    return zip_longest(*args, fillvalue=fillvalue)
+
 
 
 CSV_IN = "../nn_data_normalised.csv"
@@ -100,9 +110,9 @@ class Neighourhoods:
         
         d = defaultdict(list)
         for line in self.data:
-            geo = tuple(line[4:6])
+            geo = tuple(map(float, line[4:6]))
             nn_name = self.standardise(line[2])
-            d[nn_name].append(geo)        
+            d[nn_name].append(geo) 
         self.nn_dict = d
         self.nn_names = sorted(self.nn_dict.keys())
         if verbose:
@@ -135,7 +145,7 @@ class Neighourhoods:
         
         for nn in self.nn_dict:
             vals = self.nn_dict[nn]
-            vals = [[float(lat), float(lng)] for (lat, lng) in vals]
+            #vals = [[float(lat), float(lng)] for (lat, lng) in vals]
             #nn = self.uglify(nn)
             fn = os.path.join(subdir, nn + '.js')
             header = ("var %s = \n" % nn)
@@ -145,6 +155,33 @@ class Neighourhoods:
                 print("[%s] Writing to %s" % (count,fn))
             count = count + 1
             
+
+    def colorize(self):
+        """
+        Simple minded approach to creating as many colours as there are
+        categories.
+        """
+        d = dict.fromkeys(self.nn_dict)
+        for nn in d:
+            coords = self.nn_dict[nn]
+            a = np.array(coords)
+            #centroid = np.mean(a, axis=0)
+            centroid = np.mean(a)
+            dec = str(centroid)[3:]
+            dec = dec.ljust(9, '0')
+                
+            parts = map(int, [dec[0:3], dec[3:6], dec[6:9]])
+            parts = map(lambda x: x % 255, parts)
+            color = '#%02x%02x%02x' % tuple(parts)
+            d[nn] = color
+            
+        return d
+        
+        #HLS_tuples = [(x*1.0/N, 0.5, 0.6) for x in range(N)]
+        #RGB_tuples = [colorsys.hls_to_rgb(*hls) for hls in HLS_tuples]
+        #HEX_tuples = ['%02x%02x%02x' % (int(r*256), int(g*256), int(b*256)) for (r, g, b) in RGB_tuples]
+        #return HEX_tuples
+
     def js_headers(self):
         """
         Create a string representation of all the JS headers required.
@@ -157,6 +194,7 @@ class Neighourhoods:
     def js_layers(self):
         layer_tmpl = """    var heatLayer%s = L.heatLayer(%s).addTo(map);"""
         layers = [(layer_tmpl % (nn.capitalize(),nn))for nn in self.nn_names]
+        self.colorize()
         layers = "\n".join(layers)
         return layers
     
