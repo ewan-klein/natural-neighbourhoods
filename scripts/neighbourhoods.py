@@ -18,11 +18,11 @@ import shutil
 
 CSV_IN = "../nn_data_normalised.csv"
 HTMLDIR = "../natural-neighbourhood-pages"
-INDEX-OUT = "index.html"
-JS-OUT = "../natural-neighbourhood-pages/heatmap-data"
+INDEX_OUT = "index.html"
+JS_OUT = "../natural-neighbourhood-pages/heatmap-data"
 
 
-class Neighourhoods(object):
+class Neighourhoods:
     """
     Class for building natural neighbourhood heatmap.
     """
@@ -34,31 +34,40 @@ class Neighourhoods(object):
         
         self.data = []
         self.nn_dict = {}
+        self.nn_names = []
+        self.fromCSV(data_source)
+        self.nn_coords()
         
         
-    def fromCSV(self, data_source):
+    def fromCSV(self, data_source, verbose=True):
         """
         Read in coordinate data from a CSV file
         """
         reader = csv.reader(open(data_source, "rU"))
+        if verbose:
+            print("Reading in the file '%s'\n" % data_source)
         next(reader)
         self.data = reader
         
             
-    def nn_coords(self):
+    def nn_coords(self, verbose=True):
         """
         Build a dictionary that maps neighbourhood names into a list of
         coordinates, one for each survey response.
         """
+        
         d = defaultdict(list)
         for line in self.data:
             geo = tuple(line[4:6])
-            nn_name = line[2]
+            nn_name = self.standardise(line[2])
             d[nn_name].append(geo)        
         self.nn_dict = d
+        self.nn_names = sorted(self.nn_dict.keys())
+        if verbose:
+            print("Building dictionary with %s keys\n" % len(d))        
         
         
-    def uglify(self, name):
+    def standardise(self, name):
         """
         Convert a natural neighbourhood name into a standard format for
         filenames
@@ -85,7 +94,7 @@ class Neighourhoods(object):
         for nn in self.nn_dict:
             vals = self.nn_dict[nn]
             vals = [[float(lat), float(lng)] for (lat, lng) in vals]
-            nn = self.uglify(nn)
+            #nn = self.uglify(nn)
             fn = os.path.join(subdir, nn + '.js')
             header = ("var %s = \n" % nn)
             contents = header + json.dumps(vals)
@@ -93,12 +102,22 @@ class Neighourhoods(object):
                 outfile.write(contents)
                 print("[%s] Writing to %s" % (count,fn))
             count = count + 1
+            
+    def js_headers(self):
+        
+        header_tmpl = '<script src="%s.js" type="text/javascript"></script>'
+        headers = [(header_tmpl % nn) for nn in self.nn_names]
+        headers = "\n".join(headers)
+        return headers
+        
+            
+        
     
 def main():   
     nns = Neighourhoods(CSV_IN)
-    nns.fromCSV(CSV_IN)
-    nns.nn_coords()
-    nns.dump_address_points('../heatmap_data')
+    nns.dump_address_points(JS_OUT)
+    headers = nns.js_headers()
+    pass
     
     
         
