@@ -169,31 +169,6 @@ class Neighourhoods:
         d['gradient'][1.0] = c.get_hex()
         return json.dumps(d)
     
-    #def colorize(self):
-        #"""
-        #Simple minded approach to creating as many colours as there are
-        #categories.
-        #"""
-        #d = dict.fromkeys(self.nn_dict)
-        #for nn in d:
-            #coords = self.nn_dict[nn]
-            #a = np.array(coords)
-            ##centroid = np.mean(a, axis=0)
-            #centroid = np.mean(a)
-            #dec = str(centroid)[3:]
-            #dec = dec.ljust(9, '0')
-                
-            #parts = map(int, [dec[0:3], dec[3:6], dec[6:9]])
-            #parts = map(lambda x: x % 255, parts)
-            #color = '#%02x%02x%02x' % tuple(parts)
-            #d[nn] = color
-            
-        #return d
-        
-        #HLS_tuples = [(x*1.0/N, 0.5, 0.6) for x in range(N)]
-        #RGB_tuples = [colorsys.hls_to_rgb(*hls) for hls in HLS_tuples]
-        #HEX_tuples = ['%02x%02x%02x' % (int(r*256), int(g*256), int(b*256)) for (r, g, b) in RGB_tuples]
-        #return HEX_tuples
 
     def js_headers(self):
         """
