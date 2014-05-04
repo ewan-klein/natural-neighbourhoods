@@ -10,7 +10,7 @@
 #
 
 from collections import Counter, defaultdict
-import colorsys
+from colour import Color
 import csv
 from itertools import zip_longest
 import json
@@ -18,12 +18,8 @@ import os
 import shutil
 from string import Template
 
-import numpy as np
+#import numpy as np
 
-def grouper(n, iterable, fillvalue=None):
-    "grouper(3, 'ABCDEFG', 'x') --> ABC DEF Gxx"
-    args = [iter(iterable)] * n
-    return zip_longest(*args, fillvalue=fillvalue)
 
 
 
@@ -156,26 +152,40 @@ class Neighourhoods:
             count = count + 1
             
 
-    def colorize(self):
-        """
-        Simple minded approach to creating as many colours as there are
-        categories.
-        """
-        d = dict.fromkeys(self.nn_dict)
-        for nn in d:
-            coords = self.nn_dict[nn]
-            a = np.array(coords)
-            #centroid = np.mean(a, axis=0)
-            centroid = np.mean(a)
-            dec = str(centroid)[3:]
-            dec = dec.ljust(9, '0')
+    def pick_gradient(self, nn):
+        d = {}
+        c = Color(pick_for=nn)
+        c.set_saturation(1)
+        
+        d['gradient'] = {} 
+        c.set_luminance(0.2)
+        d['gradient'][0.2] = c.get_hex()
+        c.set_luminance(0.6)
+        d['gradient'][0.6] = c.get_hex()
+        c.set_luminance(0.8)
+        d['gradient'][0.8] = c.get_hex()
+        return json.dumps(d)
+    
+    #def colorize(self):
+        #"""
+        #Simple minded approach to creating as many colours as there are
+        #categories.
+        #"""
+        #d = dict.fromkeys(self.nn_dict)
+        #for nn in d:
+            #coords = self.nn_dict[nn]
+            #a = np.array(coords)
+            ##centroid = np.mean(a, axis=0)
+            #centroid = np.mean(a)
+            #dec = str(centroid)[3:]
+            #dec = dec.ljust(9, '0')
                 
-            parts = map(int, [dec[0:3], dec[3:6], dec[6:9]])
-            parts = map(lambda x: x % 255, parts)
-            color = '#%02x%02x%02x' % tuple(parts)
-            d[nn] = color
+            #parts = map(int, [dec[0:3], dec[3:6], dec[6:9]])
+            #parts = map(lambda x: x % 255, parts)
+            #color = '#%02x%02x%02x' % tuple(parts)
+            #d[nn] = color
             
-        return d
+        #return d
         
         #HLS_tuples = [(x*1.0/N, 0.5, 0.6) for x in range(N)]
         #RGB_tuples = [colorsys.hls_to_rgb(*hls) for hls in HLS_tuples]
