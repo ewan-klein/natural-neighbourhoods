@@ -36,7 +36,7 @@ HTML = """\
 $leaflet
     <style>
      #map {
-       width: 1024px;
+       width: 1200px;
        height: 768px; }
     </style>
 </head>
@@ -55,7 +55,7 @@ $js_headers
 
 <script>
  window.onload = function () {
-    var map = L.map('map').setView([55.9436,-3.2100], 12);
+    var map = L.map('map').setView([55.9436,-3.2100], 13);
 
     var tiles = L.tileLayer('http://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
      attribution: '<a href="https://www.mapbox.com/about/maps/">Terms and Feedback</a>',
@@ -137,12 +137,10 @@ class Neighourhoods:
         if os.path.exists(subdir):            
             shutil.rmtree(subdir)
         os.makedirs(subdir)
-        count = 0
+        count = 1
         
         for nn in self.nn_dict:
-            vals = self.nn_dict[nn]
-            #vals = [[float(lat), float(lng)] for (lat, lng) in vals]
-            #nn = self.uglify(nn)
+            vals = self.nn_dict[nn]          
             fn = os.path.join(subdir, nn + '.js')
             header = ("var %s = \n" % nn)
             contents = header + json.dumps(vals)
@@ -152,18 +150,23 @@ class Neighourhoods:
             count = count + 1
             
 
-    def pick_gradient(self, nn):
+    def heat_params(self, nn):
+        """
+        Configure gradience and other parameters for the heatmap layer.
+        """
         d = {}
+        d['blur'] = 15
+        d['radius'] = 28
         c = Color(pick_for=nn)
         c.set_saturation(1)
         
         d['gradient'] = {} 
-        c.set_luminance(0.2)
-        d['gradient'][0.2] = c.get_hex()
-        c.set_luminance(0.6)
-        d['gradient'][0.6] = c.get_hex()
-        c.set_luminance(0.8)
-        d['gradient'][0.8] = c.get_hex()
+        c.set_luminance(0.3)
+        d['gradient'][0.4] = c.get_hex()
+        c.set_luminance(0.5)
+        d['gradient'][0.65] = c.get_hex()
+        c.set_luminance(0.9)
+        d['gradient'][1.0] = c.get_hex()
         return json.dumps(d)
     
     #def colorize(self):
@@ -202,9 +205,8 @@ class Neighourhoods:
         return headers
     
     def js_layers(self):
-        layer_tmpl = """    var heatLayer%s = L.heatLayer(%s).addTo(map);"""
-        layers = [(layer_tmpl % (nn.capitalize(),nn))for nn in self.nn_names]
-        self.colorize()
+        layer_tmpl = """    var heatLayer%s = L.heatLayer(%s, %s).addTo(map);"""
+        layers = [(layer_tmpl % (nn.capitalize(), nn, self.heat_params(nn))) for nn in self.nn_names]
         layers = "\n".join(layers)
         return layers
     
