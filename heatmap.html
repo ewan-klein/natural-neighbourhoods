@@ -103,7 +103,7 @@
     var heatLayerHillside = L.heatLayer(hillside, {"gradient": {"0.4": "#679900", "0.65": "#acff00", "1.0": "#efc"}, "radius": 28, "blur": 15}).addTo(map);
     var heatLayerCramond = L.heatLayer(cramond, {"gradient": {"0.4": "#909", "0.65": "#f0f", "1.0": "#fcf"}, "radius": 28, "blur": 15}).addTo(map);
     var heatLayerRoseburn = L.heatLayer(roseburn, {"gradient": {"0.4": "#005899", "0.65": "#0093ff", "1.0": "#cce9ff"}, "radius": 28, "blur": 15}).addTo(map);
-    var heatLayerGorgie = L.heatLayer(gorgie, {"gradient": {"0.4": "#009", "0.65": "#00f", "1.0": "#ccf"}, "radius": 28, "blur": 15}).addTo(map);
+    var heatLayerGorgie = L.heatLayer(gorgie, {"gradient": {"0.4": "#900", "0.65": "#f00", "1.0": "#fcc"}, "radius": 28, "blur": 15}).addTo(map);
     var heatLayerDavidsons_mains = L.heatLayer(davidsons_mains, {"gradient": {"0.4": "#008999", "0.65": "#00e5ff", "1.0": "#ccfaff"}, "radius": 28, "blur": 15}).addTo(map);
     var heatLayerCurrie = L.heatLayer(currie, {"gradient": {"0.4": "#090", "0.65": "#0f0", "1.0": "#cfc"}, "radius": 28, "blur": 15}).addTo(map);
     var heatLayerBonnington = L.heatLayer(bonnington, {"gradient": {"0.4": "#099", "0.65": "#0ff", "1.0": "#cff"}, "radius": 28, "blur": 15}).addTo(map);
@@ -131,7 +131,7 @@
     var heatLayerCarrick_knowe = L.heatLayer(carrick_knowe, {"gradient": {"0.4": "#1d0099", "0.65": "#3000ff", "1.0": "#d6ccff"}, "radius": 28, "blur": 15}).addTo(map);
     var heatLayerBlackford = L.heatLayer(blackford, {"gradient": {"0.4": "#990053", "0.65": "#ff008a", "1.0": "#ffcce8"}, "radius": 28, "blur": 15}).addTo(map);
     var heatLayerBellevue = L.heatLayer(bellevue, {"gradient": {"0.4": "#994000", "0.65": "#ff6a00", "1.0": "#ffe1cc"}, "radius": 28, "blur": 15}).addTo(map);
-    var heatLayerDalry = L.heatLayer(dalry, {"gradient": {"0.4": "#009", "0.65": "#00f", "1.0": "#ccf"}, "radius": 28, "blur": 15}).addTo(map);
+    var heatLayerDalry = L.heatLayer(dalry, {"gradient": {"0.4": "#090", "0.65": "#0f0", "1.0": "#cfc"}, "radius": 28, "blur": 15}).addTo(map);
     var heatLayerPolwarth = L.heatLayer(polwarth, {"gradient": {"0.4": "#580099", "0.65": "#9300ff", "1.0": "#e9ccff"}, "radius": 28, "blur": 15}).addTo(map);
     var heatLayerKirkliston = L.heatLayer(kirkliston, {"gradient": {"0.4": "#679900", "0.65": "#abff00", "1.0": "#efc"}, "radius": 28, "blur": 15}).addTo(map);
     var heatLayerMerchiston = L.heatLayer(merchiston, {"gradient": {"0.4": "#900", "0.65": "#f00", "1.0": "#fcc"}, "radius": 28, "blur": 15}).addTo(map);
@@ -176,7 +176,7 @@ L.circleMarker([55.905074970625002, -3.1561871325624997], {weight: 1, opacity: .
 L.circleMarker([55.959046461428578, -3.1757368061428575], {weight: 1, opacity: .4, fillColor: '#efc', fillOpacity: 0.5}).setRadius(8).bindLabel('Hillside').addTo(map);
 L.circleMarker([55.970266126904754, -3.3045766902142848], {weight: 1, opacity: .4, fillColor: '#fcf', fillOpacity: 0.5}).setRadius(10).bindLabel('Cramond').addTo(map);
 L.circleMarker([55.94434046384616, -3.2355438324615386], {weight: 1, opacity: .4, fillColor: '#cce9ff', fillOpacity: 0.5}).setRadius(8).bindLabel('Roseburn').addTo(map);
-L.circleMarker([55.936338242058838, -3.2375419008235289], {weight: 1, opacity: .4, fillColor: '#ccf', fillOpacity: 0.5}).setRadius(8).bindLabel('Gorgie').addTo(map);
+L.circleMarker([55.936338242058838, -3.2375419008235289], {weight: 1, opacity: .4, fillColor: '#fcc', fillOpacity: 0.5}).setRadius(8).bindLabel('Gorgie').addTo(map);
 L.circleMarker([55.965646222307704, -3.2740525723076925], {weight: 1, opacity: .4, fillColor: '#ccfaff', fillOpacity: 0.5}).setRadius(8).bindLabel('Davidsons Mains').addTo(map);
 L.circleMarker([55.898449922413803, -3.3113471897241373], {weight: 1, opacity: .4, fillColor: '#cfc', fillOpacity: 0.5}).setRadius(8).bindLabel('Currie').addTo(map);
 L.circleMarker([55.971109519999992, -3.1856270092999996], {weight: 1, opacity: .4, fillColor: '#cff', fillOpacity: 0.5}).setRadius(8).bindLabel('Bonnington').addTo(map);
@@ -204,7 +204,7 @@ L.circleMarker([55.943324111216228, -3.2858017303243243], {weight: 1, opacity: .
 L.circleMarker([55.935835772999994, -3.2725763035999997], {weight: 1, opacity: .4, fillColor: '#d6ccff', fillOpacity: 0.5}).setRadius(5).bindLabel('Carrick Knowe').addTo(map);
 L.circleMarker([55.926582015600019, -3.1842621146000005], {weight: 1, opacity: .4, fillColor: '#ffcce8', fillOpacity: 0.5}).setRadius(8).bindLabel('Blackford').addTo(map);
 L.circleMarker([55.962107820000007, -3.1887067952352943], {weight: 1, opacity: .4, fillColor: '#ffe1cc', fillOpacity: 0.5}).setRadius(8).bindLabel('Bellevue').addTo(map);
-L.circleMarker([55.942249783124986, -3.2219195021562506], {weight: 1, opacity: .4, fillColor: '#ccf', fillOpacity: 0.5}).setRadius(8).bindLabel('Dalry').addTo(map);
+L.circleMarker([55.942249783124986, -3.2219195021562506], {weight: 1, opacity: .4, fillColor: '#cfc', fillOpacity: 0.5}).setRadius(8).bindLabel('Dalry').addTo(map);
 L.circleMarker([55.937338653333335, -3.2204326531333343], {weight: 1, opacity: .4, fillColor: '#e9ccff', fillOpacity: 0.5}).setRadius(8).bindLabel('Polwarth').addTo(map);
 L.circleMarker([55.957321376265057, -3.404889746843375], {weight: 1, opacity: .4, fillColor: '#efc', fillOpacity: 0.5}).setRadius(10).bindLabel('Kirkliston').addTo(map);
 L.circleMarker([55.937164214444437, -3.2192341914444444], {weight: 1, opacity: .4, fillColor: '#fcc', fillOpacity: 0.5}).setRadius(8).bindLabel('Merchiston').addTo(map);
@@ -241,8 +241,7 @@ L.circleMarker([55.938031826000007, -3.1958962862571432], {weight: 1, opacity: .
 </script>
 
     <style>
-     #map {
-      
+     #map {     
        height: 100%; }
     </style>
 </head>
