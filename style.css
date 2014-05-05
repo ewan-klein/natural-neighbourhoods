@@ -1,0 +1,25 @@
+body {
+    margin: 0px;
+    font-family: 'OpenSans', sans-serif;  
+    font-size: 16px;
+}
+
+#header {
+    padding-top: 8px;
+    height: 35px;
+    text-align:center;
+    font-size: 22px;
+    background-color: #08519c;
+    color: #eff3ff;
+}
+
+#footer {
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 30px;
+    text-align:left;
+    font-size: 12px;
+    background-color: #08519c;
+    color: #eff3ff;
+}
