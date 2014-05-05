@@ -64,12 +64,18 @@ $js_headers
     }).addTo(map);
    
 $js_layers
+
+$js_markers
    
 }
 </script>
 """
 
 class Neighbourhood(object):
+    """
+    Mini-class for encapsulating data about a neighbourhood. (Could be a
+    named tuple instead?)
+    """
     def __init__(self, name):                
             """
             Constructor: requires a CSV file as argument.
@@ -141,7 +147,7 @@ class Builder(object):
         for name in self.nn_dict:
             nn = Neighbourhood(name)
             nn.coords = self.nn_dict[name]
-            nn.centroid = tuple(np.mean(nn.coords, axis=0))
+            nn.centroid = list(np.mean(nn.coords, axis=0))
             if self.colours[nn.name] is not None:
                 nn.colour = Color(self.colours[nn.name])
             else:
@@ -161,6 +167,10 @@ class Builder(object):
     
     
     def colours_fromCSV(self, fn):
+        """
+        Create a dictionary that associates the most frequently referenced
+        neighbourhoods to hand-picked colours, stored on file.        
+        """
         d = {}
         with open(fn) as csvfile:
                 reader = csv.reader(csvfile)
@@ -197,16 +207,6 @@ class Builder(object):
                 print("[%s] Writing to %s" % (count,fn))
             count = count + 1            
         
-        #for nn in self.nn_dict:
-            #vals = self.nn_dict[nn]          
-            #fn = os.path.join(subdir, nn + '.js')
-            #header = ("var %s = \n" % nn)
-            #contents = header + json.dumps(vals)
-            #with open(fn, "w") as outfile:
-                #outfile.write(contents)
-                #print("[%s] Writing to %s" % (count,fn))
-            #count = count + 1
-            
 
     def heat_params(self, nn):
         """
@@ -243,12 +243,18 @@ class Builder(object):
         layers = "\n".join(layers)
         return layers
     
+    def js_markers(self):
+        marker_tmpl = """L.circleMarker(%s, {title: '%s', opacity: 0.85, color: '%s'}).addTo(map);"""
+        markers = [(marker_tmpl % (nn.centroid, nn.name.capitalize(), nn.colour)) for nn in self.nns]
+        markers = "\n".join(markers)
+        return markers
+    
     
     def build_html(self, myoutfile):
         html = Template(HTML)
         leaflet = Template(LEAFLET)
         
-        leaflet_str = leaflet.substitute(js_headers=self.js_headers(), js_layers=self.js_layers())
+        leaflet_str = leaflet.substitute(js_headers=self.js_headers(), js_layers=self.js_layers(), js_markers=self.js_markers())
         
         output = html.substitute(leaflet=leaflet_str)
         
