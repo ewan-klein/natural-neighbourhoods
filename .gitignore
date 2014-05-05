@@ -1,0 +1,16 @@
+leaflet
+qgis
+
+color_test.py
+kde.py
+mean.py
+
+*.xlsx
+
+.ipynb_*
+*.ipynb
+
+*.wpr
+*.wpu
+
+
