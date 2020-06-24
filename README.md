@@ -1,7 +1,7 @@
 Natural Neighbourhoods
 ======================
 
-Fork of City of Edinburgh Council survey data, with goal of visualising natural neighbourhoods. Main developments:
+Fork of [City of Edinburgh Council survey data](https://github.com/edinburghcouncil/natural-neighbourhoods), with goal of visualising natural neighbourhoods. Main developments:
 
 * Geocoded postcodes with lat-long
 * Expanded neighbourhoods of the form 'X/Y/Z' into constituents (and replicating the rest of the row)
