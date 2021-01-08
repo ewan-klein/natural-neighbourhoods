@@ -26,6 +26,6 @@ The data was gathered in response to the following questions:
 
 **Generic Geography/Street name?**
 
-This column is a field containsmy comments. I've labelled responses along the lines  of "West Edinburgh" or "South Edinburgh" as  "generic". "Street Name" indicates that the respondent may have responded with their street name but we can't say for certain.
+This column is a field that contains my comments. I've labelled responses along the lines of "West Edinburgh" or "South Edinburgh" as  "generic". "Street Name" indicates that the respondent may have responded with their street name but we can't say for certain.
 
 
